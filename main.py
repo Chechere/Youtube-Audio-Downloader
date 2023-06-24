@@ -67,6 +67,7 @@ class MyApp(App):
         self.texture = Image(source='assets/background.jpeg').texture
         self.texture.wrap = 'repeat'
         self.texture.uvsize = (8, -1)
+        self.title = "Pytube Downloader"
 
         return Builder.load_file('layout.kv')
 
@@ -78,7 +79,9 @@ if __name__ == '__main__':
 
     ssl._create_default_https_context = ssl._create_stdlib_context
     os.environ['SSL_CERT_FILE'] = certifi.where()
-
+    
     Config.set('kivy', 'window_icon', 'assets/icon.png')
+    Config.set('graphics', 'resizable', '0')    
+
 
     MyApp().run()
