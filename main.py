@@ -69,7 +69,7 @@ class AppGrid(Widget):
         self.show_debug(DOWNLOAD_PLAYLIST)
 
     def download(self, url):
-        self.show_debug("")
+        self.info_label.text = ""
 
         try:
             if self.isPlaylist(url):
