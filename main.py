@@ -1,7 +1,6 @@
 from varfile import *
 
 import os, re, ssl, time, logging, traceback
-from datetime import datetime
 from threading import Thread
 
 from kivy.app import App, ObjectProperty
