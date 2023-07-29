@@ -3,9 +3,7 @@ from datetime import datetime
 TITLE: str = "Youtube Audio Downloader"
 
 LOG_FOLDER: str = "./logs/"
-LOG_FILE_NAME_FORMAT: str = LOG_FOLDER + "{:%Y.%m.%d %H-%M-%S}.log".format(
-    datetime.now()
-)
+LOG_FILE_NAME_FORMAT: str = LOG_FOLDER + "{:%Y-%m-%d}.log".format(datetime.now())
 LOG_MESSAGE_FORMAT: str = "%(asctime)s [%(levelname)s]: %(message)s"
 
 LAYOUT_FILE: str = "./layout.kv"
