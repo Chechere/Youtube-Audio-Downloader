@@ -1,90 +1,95 @@
 #:import utils kivy.utils
+#:import varfile varfile
 
-FloatLayout:
-    AnchorLayout: #Background
-        anchor_x: 'center'
-        anchor_y: 'center'
-        canvas:
-            Rectangle:
-                pos: (0,0)
-                size: (720 * 4, 1422)
-                texture: app.texture
+<Appgrid>:
+    info_label: infolabel
+    text_input: input
+    download_button: button
 
-    AnchorLayout: #Title
-        anchor_x: 'center'
-        anchor_y: 'top'
-        padding:(0, 20, 0, 0)
+    canvas:
+        Rectangle: #Background
+            pos: self.pos
+            size: (720 * 4, 1422)
+            texture: root.background_app
+
+    GridLayout:
+        size: root.size
+
+        cols: 1
+
+        padding: (0, dp(20))
+        spacing: (0, dp(20))
 
         Image:
-            size_hint: (None, None)
-            size: self.texture_size
-            source: 'assets/title.png'
+            size_hint_y: None
+            source: varfile.TITLE_IMAGE
 
-    AnchorLayout: #URL_Input, URL_Label
-        anchor_x: 'center'
-        anchor_y: 'center'     
-        padding: (0,-200,0,0)          
+        Image:
+            size_hint_y: None
+            source: varfile.URL_LABEL_IMAGE
 
-        BoxLayout:
-            id: box
-            orientation: 'vertical'
-            size_hint: (1, 0.2)            
-                     
-            Image:
-                id: urllabel
-                source: 'assets/url_label.png'
-                size_hint: (1, 0.8)
+        BoxLayout: #URL Input & Info Label
+            size_hint_y: None
+            height: self.minimum_height
 
+            orientation: "vertical"
+            spacing: 10
 
             AnchorLayout:
-                anchor_x: 'center'
-                size_hint: (1, 0.2)                
+                anchor_x: "center"
+                anchor_y: "top"
 
                 TextInput:
                     id: input
-                    size_hint: (0.5, 1)
-                    
+
+                    size_hint: (0.65, None)
+                    height: self.font_size * 2
+
                     multiline: False
-                    hint_text: 'Insert URL here'
+                    hint_text: "Insert URL here"
 
-            
+            AnchorLayout:
+                size_hint_y: None
 
-    AnchorLayout: #Info_Label
-        anchor_x: 'center'
-        anchor_y: 'center'        
-        padding: (0, root.ids.box.size[1] + root.ids.info_label.size[1] -190, 0, 0)
+                anchor_x: "center"
+                anchor_y: "center"
 
-        Label:
-            id: info_label
-            size_hint: (0.75, None)
-            text_size: (self.width, None)
-            height: self.texture_size[1]
-            halign: 'center'
+                Label:
+                    id: infolabel
 
-            canvas.before:
-                Color:
-                    rgba: utils.get_color_from_hex('#1B2447')
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+                    size_hint: (0.65, None)
+                    height: self.texture_size[1]
 
-    AnchorLayout: #Button
-        anchor_x: 'center'
-        anchor_y: 'bottom'
-        padding: (0, 0, 0, 20)
+                    text_size: (self.width, None)
+                    halign: "center"
+
+                    canvas.before:
+                        Color:
+                            rgba: utils.get_color_from_hex("#1B2447")
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+    AnchorLayout: #Download Button
+        size: root.size
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: (0, dp(20))
 
         Button:
-            text: 'Download'
-            size: (200, 100)
-            size_hint: (None, None)
-            on_release: app.button_click(self)
-            background_normal: 'assets/button.jpeg'
-            background_down: 'assets/button_down.jpeg'
+            id: button
 
-#[For Debug] To show rectangle around object
-#canvas.before:
-    #Color:
-        #rgba: 1, 0, 0, 1
-    #Line:
-        #width: 2
-        #rectangle: self.x, self.y, self.width, self.height
+            size_hint: (None, None)
+            size: (dp(200), dp(100))
+
+            text: "Download"
+            on_release: root.button_click(self)
+            background_normal: varfile.BTN_UP_IMAGE
+            background_down: varfile.BTN_DOWN_IMAGE
+
+    #[FOR DEBUG] To show rectangle around object
+    #canvas.before:
+        #Color:
+            #rgba: (1, 0, 0, 1)
+        #Line:
+            #width: 2
+            #rectable: self.x, self.y, self.width, self.height kivy.utils import platform

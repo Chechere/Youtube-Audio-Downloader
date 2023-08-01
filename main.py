@@ -1,87 +1,100 @@
+from varfile import *
+
 import os, re, ssl, time, traceback
-import certifi
 from threading import Thread
-from kivy.app import App
+
+from kivy.app import App, ObjectProperty
 from kivy.lang import Builder
-from kivy.utils import platform
-from kivy.uix.image import Image
+#from kivy.utils import platform
 from kivy.config import Config
+from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivy.uix.widget import Widget
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+
 from pytube import Playlist, YouTube
 
-if (platform == 'android'):
-    from android.storage import primary_external_storage_path
-    from android.permissions import Permission, request_permissions
+from android.permissions import Permission, request_permissions
 
+import certifi
 
-class MyApp(App):
-    def show_info(self, info, type='info'):
-        if (type == 'error'):
-            self.root.ids.info_label.color = (1, 0, 0, 1)
-        else:
-            self.root.ids.info_label.color = (0, 1, 0, 1)
+class AppGrid(Widget):
+    info_label: Label = ObjectProperty(None)
+    text_input: TextInput = ObjectProperty(None)
+    download_button: Button = ObjectProperty(None)
+    
+    background_app: Image
 
-        self.root.ids.info_label.text = info
+    def __init__(self, **kwargs):
+        self.background_app = Image(source=BG_IMAGE).texture
+        self.background_app.wrap = "repeat"
+        self.background_app.uvsize = (8, -1)
+
+        super().__init__(**kwargs)
+
+    def show_info(self, info: str, color = INFO_COLOR):
+        self.info_label.color = color
+        self.info_label.text = info
 
     def download_video(self, video):
-        title = re.sub(r'([^a-zA-Z0-9\s\.\-_áéíóú])+',
-                       '', video.title) + '.mp3'
-
-        output = './'
-        if (platform == 'android'):
-            output = os.path.join(primary_external_storage_path(), 'Download')
+        title = re.sub(REGEX_TITLE, "", video.title) + FILE_EXTENSION
 
         self.show_info('Downloading: ' + title)
 
         try:
-            video.streams.get_audio_only().download(
-                output_path=output, filename=title, max_retries=3)
-            self.show_info('Download Success!')
-        except BaseException as ex:
-            # show_info('Download_video: ' + traceback.format_exc(), 'error')
-            self.show_info('Error downloading music', 'error')
+            video.streams.get_audio_only().download(output_path=OUTPUT, filename=title, max_retries=3)
+            self.show_info(DOWNLOAD_SUCCESS)
+        except Exception:
+            self.show_info(DOWNLOAD_ERROR, ERROR_COLOR)
 
     def download_playlist(self, playlist):
-        download_fails = 0
-
         for video in playlist.videos:
             self.download_video(video)
-            time.sleep(1.5)
+            time.sleep(PLAYLIST_SLEEP_TIME)
 
-        self.show_info('Playlist downloaded')
+        self.show_info(DOWNLOAD_PLAYLIST)
 
     def download(self, url):
+        self.info_label.text = "patata"
+
         try:
-            if (url.find('playlist?list=') != -1):
+            if self.isPlaylist(url):
                 self.download_playlist(Playlist(url))
             else:
                 self.download_video(YouTube(url))
-        except BaseException as ex:
-            self.show_info(
-                'Error getting video or playlist. Please, check URL', 'error')
-            # show_info('Download: ' + repr(ex), 'error')
+        except BaseException:
+            self.show_info(URL_ERROR, ERROR_COLOR)
+            with open(OUTPUT + "/error.txt", "w") as f:
+                f.write(traceback.format_exc())
+
+        self.download_button.disabled = False
+
+    def isPlaylist(self, url: str) -> bool:
+        return url.find(URL_PLAYLIST_SUBSTR) != -1
 
     def button_click(self, instance):
-        Thread(target=self.download, args=[self.root.ids.input.text]).start()
+        self.download_button.disabled = True
+        Thread(target=self.download, args=[self.text_input.text]).start()
 
+class PytubeApp(App):
     def build(self):
-        self.texture = Image(source='assets/background.jpeg').texture
-        self.texture.wrap = 'repeat'
-        self.texture.uvsize = (8, -1)
-        self.title = "Pytube Downloader"
+        self.root = Builder.load_file(LAYOUT_FILE)
 
-        return Builder.load_file('layout.kv')
-
+        return AppGrid()
 
 if __name__ == '__main__':
-    if (platform == 'android'):
-        request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE,
-                            Permission.INTERNET, Permission.ACCESS_NETWORK_STATE, Permission.ACCESS_WIFI_STATE])
-
+    request_permissions(
+        [
+            Permission.READ_EXTERNAL_STORAGE,
+            Permission.WRITE_EXTERNAL_STORAGE,
+            Permission.INTERNET,
+            Permission.ACCESS_NETWORK_STATE,
+            Permission.ACCESS_WIFI_STATE,
+        ]
+    )
+    
     ssl._create_default_https_context = ssl._create_stdlib_context
     os.environ['SSL_CERT_FILE'] = certifi.where()
-    
-    Config.set('kivy', 'window_icon', 'assets/icon.png')
-    Config.set('graphics', 'resizable', '0')    
 
-
-    MyApp().run()
+    PytubeApp().run()

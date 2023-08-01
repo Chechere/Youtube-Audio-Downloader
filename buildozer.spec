@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Pytube Downloader 
+title = YT Audio Downloader
 
 # (str) Package name
-package.name = pytube_downloader
+package.name = yt_audio_downloader
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.chechere
@@ -13,7 +13,7 @@ package.domain = org.chechere
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,mp3
+source.include_exts = py,png,jpg,kv,atlas,mp3,jpeg
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,images/*.png
@@ -29,7 +29,7 @@ source.include_patterns = assets/*,images/*.png
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 1.1
+version = 1.3
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -37,7 +37,8 @@ version = 1.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, pytube3, certifi, openssl, android, urllib3, requests
+requirements = python3, kivy, certifi, android, requests, typing_extensions, https://github.com/pytube/pytube/archive/refs/heads/master.zip
+#urllib3, openssl
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -47,7 +48,7 @@ requirements = python3, kivy, pytube3, certifi, openssl, android, urllib3, reque
 #presplash.filename = %(source.dir)s/data/presplash.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = assets/icon.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
@@ -67,7 +68,7 @@ orientation = portrait
 osx.python_version = 3
 
 # Kivy version to use
-osx.kivy_version = master
+osx.kivy_version = 2.2.1
 
 #
 # Android specific
@@ -95,7 +96,7 @@ fullscreen = 0
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
-android.permissions = android.permission.INTERNET, android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.ACCESS_NETWORK_STATE, android.permission.ACCESS_WIFI_STATE, android.permission.MANAGE_EXTERNAL_STORAGE
+android.permissions = android.permission.INTERNET,  android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.ACCESS_NETWORK_STATE, android.permission.ACCESS_WIFI_STATE, android.permission.MANAGE_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -151,7 +152,7 @@ android.permissions = android.permission.INTERNET, android.permission.READ_EXTER
 
 # (str) Extra xml to write directly inside the <manifest><application> tag of AndroidManifest.xml
 # use that parameter to provide a filename from where to load your custom XML arguments:
-#android.extra_manifest_application_arguments = ./manifest.xml
+#android.extra_manifest_application_arguments = ./src/android/extra_manifest_application_arguments.xml
 
 # (str) Full name including package path of the Java class that implements Python Service
 # use that parameter to set custom Java class which extends PythonService
@@ -305,7 +306,7 @@ android.allow_backup = True
 # android.no-byte-compile-python = False
 
 # (str) The format used to package the app for release mode (aab or apk or aar).
-# android.release_artifact = aab
+android.release_artifact = apk
 
 # (str) The format used to package the app for debug mode (apk or aar).
 # android.debug_artifact = apk
@@ -330,7 +331,7 @@ android.allow_backup = True
 #p4a.source_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-p4a.local_recipes = .buildozer/android/platform/python-for-android/recipes
+#p4a.local_recipes =
 
 # (str) Filename to the hook for p4a
 #p4a.hook =
