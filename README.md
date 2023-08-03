@@ -3,6 +3,7 @@ Project for an android app that downloads audio from youtube videos.
 
 ## Disclaimer
 Buildozer, package used to build apk, only works on linux or mac. If you are on Windows, you need to install the WSL.
+
 [Microsoft - Install WSL guide](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 
@@ -24,6 +25,7 @@ Make sure virtualenv is installed:
 ## Install Buildozer
 
 Used to build project apk.
+
 [Buildozer - Installation Guide](https://buildozer.readthedocs.io/en/latest/installation.html)
 
 Resume:
