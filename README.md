@@ -1,6 +1,10 @@
 # Youtube-Audio-Downloader
 Project for an android app that downloads audio from youtube videos.
 
+## Disclaimer
+Buildozer, package used to build apk, only works on linux or mac. If you are on Windows, you need to install the WSL.
+[Microsoft - Install WSL guide](https://learn.microsoft.com/en-us/windows/wsl/install)
+
 
 ## Download branch
 
@@ -14,13 +18,15 @@ Make sure virtualenv is installed:
 
     sudo apt install python3-venv
 
-## Open Virtualenv
+### Open Virtualenv
     -Linux: source .kivy/bin/activate
-    -Windows: .kivy/scripts/activate.bat
 
 ## Install Buildozer
 
 Used to build project apk.
+[Buildozer - Installation Guide](https://buildozer.readthedocs.io/en/latest/installation.html)
+
+Resume:
 
     pip3 install --user --upgrade buildozer
 
