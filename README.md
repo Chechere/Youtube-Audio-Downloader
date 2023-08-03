@@ -8,9 +8,11 @@ Project for an android app that downloads audio from youtube videos.
 
 ## Create Virtualenv
 
-Make sure virtualenv is installed: sudo apt install python3-venv
-
     virtualenv .kivy
+
+Make sure virtualenv is installed: 
+
+    sudo apt install python3-venv
 
 ## Open Virtualenv
     -Linux: source .kivy/bin/activate
