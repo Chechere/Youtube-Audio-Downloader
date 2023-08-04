@@ -45,7 +45,7 @@ class AppGrid(Widget):
         self.show_info(info, INFO_COLOR, logging.DEBUG, stacktrace)
 
     def download_video(self, video):
-        title = re.sub(REGEX_TITLE, "", video.title) + ".mp3"
+        title = re.sub(REGEX_TITLE, "", video.title) + FILE_EXTENSION
 
         self.show_debug("Downloading: " + title)
 

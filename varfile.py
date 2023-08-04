@@ -21,6 +21,7 @@ INFO_COLOR: tuple = (0, 1, 0, 1)
 
 OUTPUT: str = "./output/"
 REGEX_TITLE: str = r"([^a-zA-Z0-9\s\.\-_áéíóú])+"
+FILE_EXTENSION:str = ".mp3"
 
 URL_PLAYLIST_SUBSTR: str = "playlist?list="
 
