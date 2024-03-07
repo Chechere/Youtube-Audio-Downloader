@@ -1,6 +1,6 @@
 from varfile import *
 
-import os, re, ssl, time, traceback, logging
+import os, traceback, logging
 
 from logging import LogRecord
 from threading import Thread
@@ -15,8 +15,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.logger import Logger, LoggerHistory
 
-from pytube import Playlist, YouTube
-import certifi        
+from downloader import Downloader
 
 class LogLabelHander(logging.Handler):
     def __init__(self, label):
@@ -49,53 +48,15 @@ class AppGrid(Widget):
 
         super().__init__(**kwargs)  
 
-        Logger.addHandler(LogLabelHander(self.info_label))             
-
-    def download_video(self, video):
-        title = re.sub(REGEX_TITLE, "", video.title) + FILE_EXTENSION
-
-        Logger.info(LOG_TAG + "Downloading: " + title)        
-
-        if not os.path.exists(OUTPUT):
-            os.mkdir(OUTPUT)
-
-        try:
-            video.streams.get_audio_only().download(
-                output_path=OUTPUT, 
-                filename=title, 
-                max_retries=3)           
-             
-            Logger.info(DOWNLOAD_SUCCESS)            
-        except BaseException:            
-            Logger.error(DOWNLOAD_ERROR, exc_info=traceback.format_exc())            
-
-    def download_playlist(self, playlist):
-        for video in playlist.videos:
-            self.download_video(video)
-            time.sleep(PLAYLIST_SLEEP_TIME)
-
-        # self.show_info(DOWNLOAD_PLAYLIST, INFO_COLOR)
-        Logger.info(DOWNLOAD_PLAYLIST)        
-
-    def download(self, url: str):
-        try:
-            if self.is_playlist(url):
-                self.download_playlist(Playlist(url))
-            else:
-                self.download_video(YouTube(url))
-        except BaseException:
-            Logger.error(URL_ERROR, exc_info=traceback.format_exc())            
-
-        self.download_button.disabled = False
-
-    def is_playlist(self, url: str) -> bool:
-        return url.find(URL_PLAYLIST_SUBSTR) != -1
+        Logger.addHandler(LogLabelHander(self.info_label))  
+        self.downloader:Downloader = Downloader()               
 
     def button_click(self, instance):
-        self.download_button.disabled = True
+        if self.downloader.downloading:
+            return
 
         Thread(
-            target=self.download, 
+            target=self.downloader.download, 
             args=[self.text_input.text]).start()
 
     def save_log_click(self, instance):        
@@ -124,13 +85,9 @@ class YTAudioDownloader(App):
 
         return AppGrid()
 
-if __name__ == "__main__":
-    ssl._create_default_https_context = ssl._create_stdlib_context
-    os.environ["SSL_CERT_FILE"] = certifi.where()    
-
-    Config.set("graphics", "resizable", False)        
-
+if __name__ == "__main__":    
     try:
+        Config.set("graphics", "resizable", False)        
         app: YTAudioDownloader = YTAudioDownloader()
         app.run()
     except BaseException:
