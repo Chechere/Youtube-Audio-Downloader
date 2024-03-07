@@ -1,15 +1,16 @@
+#:kivy 2.2.1
 #:import utils kivy.utils
 #:import varfile varfile
 
 <Appgrid>:
     info_label: infolabel
     text_input: input
-    download_button: button
+    download_button: download_button
 
     canvas:
         Rectangle: #Background
             pos: self.pos
-            size: (720 * 4, 1422)
+            size: self.size #(varfile.WINDOW_WIDTH, varfile.WINDOW_HEIGHT)
             texture: root.background_app
 
     GridLayout:
@@ -76,7 +77,7 @@
         padding: (0, dp(20))
 
         Button:
-            id: button
+            id: download_button
 
             size_hint: (None, None)
             size: (dp(200), dp(100))
@@ -85,6 +86,23 @@
             on_release: root.button_click(self)
             background_normal: varfile.BTN_UP_IMAGE
             background_down: varfile.BTN_DOWN_IMAGE
+
+    AnchorLayout: #Log Button
+        size: root.size
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: (dp(10), dp(20))
+
+        Button:
+            id: log_button
+
+            size_hint: (None, None)
+            size: (48, 48)
+
+            # text: "LOGS"
+            on_release: root.save_log_click(self)
+            background_normal: varfile.LOG_BUTTON_UP_IMAGE
+            background_down: varfile.LOG_BUTTON_DOWN_IMAGE
 
     #[FOR DEBUG] To show rectangle around object
     #canvas.before:
