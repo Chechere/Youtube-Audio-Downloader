@@ -4,4 +4,4 @@ output/
 .vscode/
 __pycache__/
 build/
-main.spec/
+main.spec
