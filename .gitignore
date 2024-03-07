@@ -1,2 +1,7 @@
 logs/
 output/
+.kivy/
+.vscode/
+__pycache__/
+build/
+main.spec/

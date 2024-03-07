@@ -17,7 +17,6 @@ import certifi
 
 logger: logging.Logger
 
-
 class AppGrid(Widget):
     info_label: Label = ObjectProperty(None)
     text_input: TextInput = ObjectProperty(None)
@@ -97,6 +96,9 @@ class YTAudioDownloader(App):
 
 
 def set_logger() -> logging.Logger:
+    if(not os.path.isdir(LOG_FOLDER)):
+        os.makedirs(LOG_FOLDER)
+        
     fh = logging.FileHandler(LOG_FILE_NAME_FORMAT)
     fh.setFormatter(logging.Formatter(LOG_MESSAGE_FORMAT))
     fh.setLevel(logging.DEBUG)
