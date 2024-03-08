@@ -1,4 +1,4 @@
-from varfile import *
+from __consts__ import *
 
 import os, traceback, logging
 
@@ -16,6 +16,9 @@ from kivy.uix.button import Button
 from kivy.logger import Logger, LoggerHistory
 
 from downloader import Downloader
+
+from kivy.config import ConfigParser
+from kivy.uix.settings import Settings
 
 class LogLabelHander(logging.Handler):
     def __init__(self, label):
@@ -49,7 +52,7 @@ class AppGrid(Widget):
         super().__init__(**kwargs)  
 
         Logger.addHandler(LogLabelHander(self.info_label))  
-        self.downloader:Downloader = Downloader()               
+        self.downloader:Downloader = Downloader()                       
 
     def button_click(self, instance):
         if self.downloader.downloading:
@@ -60,9 +63,9 @@ class AppGrid(Widget):
             args=[self.text_input.text]).start()
 
     def save_log_click(self, instance):        
-        if(not os.path.isdir(LOG_FOLDER)):            
+        if(not os.path.isdir(DEFAULT_LOG_FOLDER)):            
             Logger.info(CREATING_FOLDER_LOG)            
-            os.makedirs(LOG_FOLDER)                
+            os.makedirs(DEFAULT_LOG_FOLDER)                
         
         fh = logging.FileHandler(LOG_FILE_NAME_FORMAT)
         fh.setFormatter(logging.Formatter(LOG_MESSAGE_FORMAT))
@@ -81,11 +84,36 @@ class YTAudioDownloader(App):
     def build(self):
         self.title = TITLE
         self.icon = ICO_IMAGE        
-        self.root = Builder.load_file(LAYOUT_FILE)                
+        self.root = Builder.load_file(LAYOUTS_FILE)                
+        self.use_kivy_settings = False                
 
         return AppGrid()
+    
+    def build_settings(self, settings: Settings):
+        config = ConfigParser()
+        config.read("./config.ini")
+
+        settings.add_json_panel(
+                        title= "Youtube Downloader", 
+                        config= config, 
+                        filename= "config.json")
+        
+        return super().build_settings(settings)
+
+def create_ini_file():
+    with open(INI_FILE_DIR, "w") as f:        
+        f.write("[FOLDERS]")
+        f.write("\nLOG_FOLDER = " + DEFAULT_LOG_FOLDER)
+        f.write("\nOUTPUT_FOLDER = " + DEFAULT_OUTPUT_FOLDER)        
+
 
 if __name__ == "__main__":    
+    if not os.path.isfile(INI_FILE_DIR):
+        create_ini_file()
+        pass
+
+    # ! ERROR config.read_file(INI_FILE_DIR)
+
     try:
         Config.set("graphics", "resizable", False)        
         app: YTAudioDownloader = YTAudioDownloader()

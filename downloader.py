@@ -1,4 +1,4 @@
-from varfile import *
+from __consts__ import *
 
 import os, re, traceback, time, ssl
 import certifi
