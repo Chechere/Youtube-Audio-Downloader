@@ -1,22 +1,25 @@
 from __consts__ import *
 
-import os, traceback, logging
+import os, traceback, logging, shutil
 
 from logging import LogRecord
 from threading import Thread
 
 from kivy.app import App, ObjectProperty
-from kivy.config import Config
+from kivy.config import Config, ConfigParser
 from kivy.lang import Builder
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.logger import Logger, LoggerHistory
-from kivy.config import ConfigParser
 from kivy.uix.settings import Settings
-from kivy.loader import Loader
+from kivy.logger import Logger, LoggerHistory
+from kivy.utils import platform
+
+if platform == ANDROID_PLATFORM:
+    from android.permissions import Permission, request_permissions  # type: ignore
+    from android.storage import primary_external_storage_path, app_storage_path  # type: ignore
 
 from downloader import Downloader
 
@@ -50,13 +53,14 @@ class AppGrid(Widget):
     def __init__(self, **kwargs):
         self.background_app: Image = Image(source=BG_IMAGE).texture
 
-        super().__init__(**kwargs)
-
-        Logger.addHandler(LogLabelHander(self.info_label))
         self.downloader: Downloader = Downloader()
 
         self.config: ConfigParser = ConfigParser()
         self.config.read(INI_FILE_DIR)
+
+        super().__init__(**kwargs)
+
+        Logger.addHandler(LogLabelHander(self.info_label))
 
     def button_click(self, instance):
         if self.downloader.downloading:
@@ -76,7 +80,7 @@ class AppGrid(Widget):
                 log_folder = DEFAULT_LOG_FOLDER
 
         try:
-            fh = logging.FileHandler(os.path.join(log_folder, LOG_FILE_NAME_FORMAT))
+            fh = logging.FileHandler(os.path.join(TEMP_FOLDER, LOG_FILE_NAME_FORMAT))
             fh.setFormatter(logging.Formatter(LOG_MESSAGE_FORMAT))
             fh.setLevel(logging.DEBUG)
 
@@ -88,6 +92,12 @@ class AppGrid(Widget):
 
             Logger.info(LOG_SAVED)
             fh.emit(LoggerHistory.history[0])
+            fh.close()
+
+            shutil.move(
+                os.path.join(TEMP_FOLDER, LOG_FILE_NAME_FORMAT),
+                os.path.join(log_folder, LOG_FILE_NAME_FORMAT),
+            )
         except:
             Logger.error(CREATE_LOG_FILE_ERROR, exc_info=traceback.format_exc())
 
@@ -100,6 +110,18 @@ class YTAudioDownloader(App):
         self.use_kivy_settings = False
 
         return AppGrid()
+
+    def on_start(self):
+        if platform == ANDROID_PLATFORM:
+            request_permissions(
+                [
+                    Permission.READ_EXTERNAL_STORAGE,
+                    Permission.WRITE_EXTERNAL_STORAGE,
+                    Permission.INTERNET,
+                    Permission.ACCESS_NETWORK_STATE,
+                    Permission.ACCESS_WIFI_STATE,
+                ]
+            )
 
     def build_settings(self, settings: Settings):
         config: ConfigParser = ConfigParser()
@@ -121,7 +143,6 @@ if __name__ == "__main__":
 
     try:
         Config.set("graphics", "resizable", False)
-        Loader.loading_image = Image(ICO_IMAGE)
 
         app: YTAudioDownloader = YTAudioDownloader()
         app.run()

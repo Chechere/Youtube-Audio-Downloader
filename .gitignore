@@ -1,8 +1,11 @@
 logs/
 output/
 .kivy/
+.venv/
 .vscode/
 __pycache__/
 build/
 main.spec
 config.ini
+.buildozer/
+.bin/

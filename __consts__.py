@@ -3,13 +3,35 @@ from pathlib import Path
 from tempfile import mkdtemp
 import os
 
+from kivy.utils import platform
+
 TITLE: str = "Youtube Audio Downloader"
 VERSION: str = "1.2.0"
 
+ANDROID_PLATFORM: str = "android"
+
+if platform == ANDROID_PLATFORM:
+    from android.storage import primary_external_storage_path, app_storage_path  # type: ignore
+
+    BG_IMAGE: str = "./assets/Android/background.jpeg"
+
+    TEMP_FOLDER: str = mkdtemp(prefix="yt_audio_downloader")
+    # TEMP_FOLDER: str = app_storage_path
+
+    DEFAULT_LOG_FOLDER: str = os.path.join(primary_external_storage_path(), "Documents")
+    DEFAULT_OUTPUT_FOLDER: str = os.path.join(
+        primary_external_storage_path(), "Download"
+    )
+else:
+    BG_IMAGE: str = "./assets/PC/background.jpeg"
+
+    TEMP_FOLDER: str = mkdtemp(prefix="yt_audio_downloader")
+
+    DEFAULT_LOG_FOLDER: str = str(Path.cwd() / "logs")
+    DEFAULT_OUTPUT_FOLDER: str = str(Path.home() / "Downloads")
+
 # INI DATA
 INI_FILE_DIR = "./config.ini"
-DEFAULT_LOG_FOLDER: str = str(Path.cwd() / "logs")
-DEFAULT_OUTPUT_FOLDER: str = str(Path.home() / "Downloads")
 FOLDER_SECTION = "FOLDERS"
 LOG_FOLDER_SETTING = "LOG_FOLDER"
 OUTPUT_FOLDER_SETTING = "OUTPUT_FOLDER"
@@ -45,8 +67,7 @@ JSON_FILE: str = (
     )
 )
 
-
-# LOGS MSGS
+# LOGS MESSAGES
 LOG_TAG: str = "Program: "
 APP_ERROR: str = "Error while running app"
 CREATING_FOLDER_LOG: str = LOG_TAG + "Creating log folder."
@@ -72,7 +93,7 @@ INFO_COLOR: tuple = (0, 1, 0, 1)
 
 # ASSETS
 LAYOUTS_FILE: str = "./layouts.kv"
-BG_IMAGE: str = "./assets/background.jpeg"
+BG_IMAGE: str = "./assets/PC/background.jpeg"
 BTN_UP_IMAGE: str = "./assets/button.jpeg"
 BTN_DOWN_IMAGE: str = "./assets/button_down.jpeg"
 ICO_IMAGE: str = "./assets/icon.png"
@@ -82,8 +103,7 @@ LOG_BUTTON_UP_IMAGE: str = "./assets/log_button.png"
 LOG_BUTTON_DOWN_IMAGE: str = "./assets/log_button_down.png"
 
 # DOWNLOADING
-TEMP_FOLDER: str = mkdtemp(prefix="yt_audio_downloader")
-REGEX_TITLE: str = r"([^a-zA-Z0-9\s\.\-_áéíóú])+"
+REGEX_RESERVED_CHARS: str = r"([^a-zA-Z0-9\s\.\-_áéíóú])+"
 VIDEO_EXTENSION: str = ".mp4"
 MUSIC_EXTENSION: str = ".mp3"
 MAX_RETRIES: int = 3

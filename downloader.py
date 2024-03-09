@@ -1,6 +1,6 @@
 from __consts__ import *
 
-import os, re, traceback, time, ssl
+import os, re, traceback, time, ssl, shutil
 import certifi
 
 from kivy.logger import Logger
@@ -21,11 +21,10 @@ class Downloader:
         self.config.read(INI_FILE_DIR)
 
     def download_video(self, video: YouTube):
-        title = re.sub(REGEX_TITLE, "", video.title)
+        title = re.sub(REGEX_RESERVED_CHARS, "", video.title)
+        output_folder: str = self.config.get(FOLDER_SECTION, OUTPUT_FOLDER_SETTING)
 
         Logger.info(LOG_TAG + "Downloading: " + title)
-
-        output_folder: str = self.config.get(FOLDER_SECTION, OUTPUT_FOLDER_SETTING)
 
         if not os.path.exists(output_folder):
             try:
@@ -33,20 +32,26 @@ class Downloader:
             except:
                 Logger.error(DOWNLOAD_ERROR, exc_info=traceback.format_exc())
 
+        temp_name: str = re.sub(
+            REGEX_RESERVED_CHARS,
+            "",
+            str(hash(title + str(datetime.now().microsecond))),
+        )
+
         try:
             temp_video_path: str = video.streams.get_audio_only().download(
                 output_path=TEMP_FOLDER,
-                filename=title + VIDEO_EXTENSION,
+                filename=temp_name + VIDEO_EXTENSION,
                 max_retries=MAX_RETRIES,
             )
 
-            temp_music_path = os.path.join(TEMP_FOLDER, title + MUSIC_EXTENSION)
+            temp_music_path = os.path.join(TEMP_FOLDER, temp_name + MUSIC_EXTENSION)
 
             ffmpeg.input(temp_video_path).output(temp_music_path).run()
 
             output = os.path.join(output_folder, title + MUSIC_EXTENSION)
 
-            os.rename(temp_music_path, output)
+            shutil.move(temp_music_path, output)
 
             Logger.info(DOWNLOAD_SUCCESS)
         except:
