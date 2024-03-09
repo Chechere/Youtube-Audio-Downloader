@@ -7,6 +7,7 @@ from kivy.logger import Logger
 from kivy.config import ConfigParser
 
 from pytube import Playlist, YouTube
+import ffmpeg
 
 
 class Downloader:
@@ -20,22 +21,32 @@ class Downloader:
         self.config.read(INI_FILE_DIR)
 
     def download_video(self, video: YouTube):
-        title = re.sub(REGEX_TITLE, "", video.title) + FILE_EXTENSION
+        title = re.sub(REGEX_TITLE, "", video.title)
 
         Logger.info(LOG_TAG + "Downloading: " + title)
 
-        output: str = self.config.get(FOLDER_SECTION, OUTPUT_FOLDER_SETTING)
+        output_folder: str = self.config.get(FOLDER_SECTION, OUTPUT_FOLDER_SETTING)
 
-        if not os.path.exists(output):
+        if not os.path.exists(output_folder):
             try:
-                os.mkdir(output)
+                os.mkdir(output_folder)
             except:
                 Logger.error(DOWNLOAD_ERROR, exc_info=traceback.format_exc())
 
         try:
-            video.streams.get_audio_only().download(
-                output_path=output, filename=title, max_retries=MAX_RETRIES
+            temp_video_path: str = video.streams.get_audio_only().download(
+                output_path=TEMP_FOLDER,
+                filename=title + VIDEO_EXTENSION,
+                max_retries=MAX_RETRIES,
             )
+
+            temp_music_path = os.path.join(TEMP_FOLDER, title + MUSIC_EXTENSION)
+
+            ffmpeg.input(temp_video_path).output(temp_music_path).run()
+
+            output = os.path.join(output_folder, title + MUSIC_EXTENSION)
+
+            os.rename(temp_music_path, output)
 
             Logger.info(DOWNLOAD_SUCCESS)
         except:
