@@ -29,7 +29,7 @@ source.include_patterns = assets/*,images/*.png
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 1.3
+version = 1.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -45,7 +45,7 @@ requirements = python3, kivy, certifi, android, requests, typing_extensions, htt
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = assets/icon.png
 
 # (str) Icon of the application
 icon.filename = assets/icon.png
