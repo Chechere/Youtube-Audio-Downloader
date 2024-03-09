@@ -1,6 +1,5 @@
 from datetime import datetime
 from pathlib import Path
-import os
 
 TITLE: str = "Youtube Audio Downloader"
 
@@ -8,21 +7,53 @@ TITLE: str = "Youtube Audio Downloader"
 INI_FILE_DIR = "./config.ini"
 DEFAULT_LOG_FOLDER: str = str(Path.cwd() / "logs")
 DEFAULT_OUTPUT_FOLDER: str = str(Path.home() / "Downloads")
-OUTPUT: str = str(Path.home() / "Downloads")
+FOLDER_SECTION = "FOLDERS"
+LOG_FOLDER_SETTING = "LOG_FOLDER"
+OUTPUT_FOLDER_SETTING = "OUTPUT_FOLDER"
+INI_DEFAULT_FILE: list[str] = ["[{0}]".format(FOLDER_SECTION),
+                               "{0} = {1}".format(LOG_FOLDER_SETTING, DEFAULT_LOG_FOLDER),
+                               "{0} = {1}".format(OUTPUT_FOLDER_SETTING, DEFAULT_OUTPUT_FOLDER)]
+JSON_FILE: str = """
+[
+    {{
+        \"type\": \"title\",
+        \"title\": \"Folders\"
+    }},
+    {{
+        \"type\": \"path\",
+        \"title\": \"Output Folder\",
+        \"desc\": \"Set where musics should be saved\",
+        \"section\": \"{0}\",
+        \"key\": \"{1}\"
+    }},
+    {{
+        \"type\": \"path\",
+        \"title\": \"Log Folder\",
+        \"desc\": \"Set where logs should be saved\",
+        \"section\": \"{2}\",
+        \"key\": \"{3}\"
+    }}
+]
+""".format(FOLDER_SECTION, OUTPUT_FOLDER_SETTING, FOLDER_SECTION, LOG_FOLDER_SETTING)
+
+
 
 #LOGS MSGS
 LOG_TAG: str = "Program: "
-CREATING_FOLDER_LOG: str = "Creating log folder."
-LOGGER_WRITTING_LOG_FILE: str = "Writting on log file."
-LOG_SAVED: str = "Log file saved!"
 APP_ERROR: str = "Error while running app"
+CREATING_FOLDER_LOG: str = LOG_TAG + "Creating log folder."
+LOGGER_WRITTING_LOG_FILE: str = LOG_TAG + "Writting on log file."
+LOG_SAVED: str = LOG_TAG + "Log file saved!"
 URL_ERROR: str = LOG_TAG + "Error getting video or playlist. Please, check URL"
+CREATE_OUTPUT_FOLDER_ERROR = LOG_TAG + "Error while creating output folder"
+CREATE_LOG_FOLDER_ERROR = LOG_TAG + "Error while creating log folder. Using folder: " + DEFAULT_LOG_FOLDER
+CREATE_LOG_FILE_ERROR = LOG_TAG + "Error while creating log file"
 DOWNLOAD_SUCCESS: str = LOG_TAG + "Download Success!"
 DOWNLOAD_ERROR: str = LOG_TAG + "Error downloading music"
 DOWNLOAD_PLAYLIST: str = LOG_TAG + "Playlist downloaded"
 
 #LOG FILE FORMAT
-LOG_FILE_NAME_FORMAT: str = DEFAULT_LOG_FOLDER + "{:%Y-%m-%d}.log".format(datetime.now())
+LOG_FILE_NAME_FORMAT: str = "{:%Y-%m-%d}.log".format(datetime.now())
 LOG_MESSAGE_FORMAT: str = "%(asctime)s [%(levelname)s]: %(message)s"
 
 #LOG COLORS
@@ -40,11 +71,12 @@ URL_LABEL_IMAGE: str = "./assets/url_label.png"
 LOG_BUTTON_UP_IMAGE: str = "./assets/log_button.png"
 LOG_BUTTON_DOWN_IMAGE: str = "./assets/log_button_down.png"
 
-#MUSIC FILE DATA
+#DOWNLOADING
 REGEX_TITLE: str = r"([^a-zA-Z0-9\s\.\-_áéíóú])+"
-FILE_EXTENSION:str = ".mp3"
+FILE_EXTENSION: str = ".mp3"
+MAX_RETRIES: int = 3
 
 #PLAYLIST
 URL_PLAYLIST_SUBSTR: str = "playlist?list="
 PLAYLIST_SLEEP_TIME: float = 1.5
-
+NOT_PLAYLIST: int = -1
