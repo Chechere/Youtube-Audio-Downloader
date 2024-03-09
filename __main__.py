@@ -14,11 +14,11 @@ from kivy.uix.widget import Widget
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.logger import Logger, LoggerHistory
-
-from downloader import Downloader
-
 from kivy.config import ConfigParser
 from kivy.uix.settings import Settings
+from kivy.loader import Loader
+
+from downloader import Downloader
 
 
 class LogLabelHander(logging.Handler):
@@ -121,6 +121,8 @@ if __name__ == "__main__":
 
     try:
         Config.set("graphics", "resizable", False)
+        Loader.loading_image = Image(ICO_IMAGE)
+
         app: YTAudioDownloader = YTAudioDownloader()
         app.run()
     except BaseException:
