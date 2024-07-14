@@ -1,4 +1,4 @@
-from __consts__ import *
+from variables import *
 
 import os, traceback, logging, shutil
 
@@ -66,7 +66,9 @@ class AppGrid(Widget):
         if self.downloader.downloading:
             return
 
-        Thread(target=self.downloader.download, args=[self.text_input.text]).start()
+        Thread(
+            target=self.downloader.download, args=[self.text_input.text]
+        ).start()
 
     def save_log_click(self, instance):
         log_folder: str = self.config.get(FOLDER_SECTION, LOG_FOLDER_SETTING)
@@ -76,11 +78,15 @@ class AppGrid(Widget):
             try:
                 os.makedirs(log_folder)
             except:
-                Logger.error(CREATE_LOG_FOLDER_ERROR, exc_info=traceback.format_exc())
+                Logger.error(
+                    CREATE_LOG_FOLDER_ERROR, exc_info=traceback.format_exc()
+                )
                 log_folder = DEFAULT_LOG_FOLDER
 
         try:
-            fh = logging.FileHandler(os.path.join(TEMP_FOLDER, LOG_FILE_NAME_FORMAT))
+            fh = logging.FileHandler(
+                os.path.join(TEMP_FOLDER, LOG_FILE_NAME_FORMAT)
+            )
             fh.setFormatter(logging.Formatter(LOG_MESSAGE_FORMAT))
             fh.setLevel(logging.DEBUG)
 

@@ -18,7 +18,9 @@ if platform == ANDROID_PLATFORM:
     TEMP_FOLDER: str = mkdtemp(prefix="yt_audio_downloader")
     # TEMP_FOLDER: str = app_storage_path
 
-    DEFAULT_LOG_FOLDER: str = os.path.join(primary_external_storage_path(), "Documents")
+    DEFAULT_LOG_FOLDER: str = os.path.join(
+        primary_external_storage_path(), "Documents"
+    )
     DEFAULT_OUTPUT_FOLDER: str = os.path.join(
         primary_external_storage_path(), "Download"
     )
@@ -63,7 +65,10 @@ JSON_FILE: str = (
     }}
 ]
 """.format(
-        FOLDER_SECTION, OUTPUT_FOLDER_SETTING, FOLDER_SECTION, LOG_FOLDER_SETTING
+        FOLDER_SECTION,
+        OUTPUT_FOLDER_SETTING,
+        FOLDER_SECTION,
+        LOG_FOLDER_SETTING,
     )
 )
 
@@ -76,12 +81,15 @@ LOG_SAVED: str = LOG_TAG + "Log file saved!"
 URL_ERROR: str = LOG_TAG + "Error getting video or playlist. Please, check URL"
 CREATE_OUTPUT_FOLDER_ERROR = LOG_TAG + "Error while creating output folder"
 CREATE_LOG_FOLDER_ERROR = (
-    LOG_TAG + "Error while creating log folder. Using folder: " + DEFAULT_LOG_FOLDER
+    LOG_TAG
+    + "Error while creating log folder. Using folder: "
+    + DEFAULT_LOG_FOLDER
 )
 CREATE_LOG_FILE_ERROR = LOG_TAG + "Error while creating log file"
 DOWNLOAD_SUCCESS: str = LOG_TAG + "Download Success!"
 DOWNLOAD_ERROR: str = LOG_TAG + "Error downloading music"
 DOWNLOAD_PLAYLIST: str = LOG_TAG + "Playlist downloaded"
+TEMP_SAVED: str = "Audio saved temporarily on: "
 
 # LOG FILE FORMAT
 LOG_FILE_NAME_FORMAT: str = "{:%Y-%m-%d}.log".format(datetime.now())

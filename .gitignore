@@ -2,10 +2,12 @@ logs/
 output/
 .kivy/
 .venv/
+.ytdl/
 .vscode/
 __pycache__/
 build/
 main.spec
 config.ini
 .buildozer/
+buildozer.spec
 .bin/

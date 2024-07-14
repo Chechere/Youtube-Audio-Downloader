@@ -1,6 +1,6 @@
 #:kivy 2.2.1
 #:import utils kivy.utils
-#:import __consts__ __consts__
+#:import variables variables
 #:import Factory kivy.factory.Factory
 #:import platform kivy.utils
 #:import Image kivy.uix.image
@@ -26,11 +26,11 @@
 
         Image:
             size_hint_y: None
-            source: __consts__.TITLE_IMAGE
+            source: variables.TITLE_IMAGE
 
         Image:
             size_hint_y: None
-            source: __consts__.URL_LABEL_IMAGE
+            source: variables.URL_LABEL_IMAGE
 
         BoxLayout: #URL Input & Info Label
             size_hint_y: None
@@ -88,8 +88,8 @@
 
             text: "Download"
             on_release: root.button_click(self)
-            background_normal: __consts__.BTN_UP_IMAGE
-            background_down: __consts__.BTN_DOWN_IMAGE
+            background_normal: variables.BTN_UP_IMAGE
+            background_down: variables.BTN_DOWN_IMAGE
 
     AnchorLayout: #Log Button
         size: root.size
@@ -104,8 +104,8 @@
             size: (dp(48), dp(48))
 
             on_release: root.save_log_click(self)
-            background_normal: __consts__.LOG_BUTTON_UP_IMAGE
-            background_down: __consts__.LOG_BUTTON_DOWN_IMAGE
+            background_normal: variables.LOG_BUTTON_UP_IMAGE
+            background_down: variables.LOG_BUTTON_DOWN_IMAGE
 
     AnchorLayout: #Version Label
         size: root.size
@@ -119,7 +119,7 @@
             size_hint: (None, None)
             size: (0, 0)
 
-            text: __consts__.VERSION
+            text: variables.VERSION
 
     # [FOR DEBUG] To show rectangle around object
     # canvas.before:
