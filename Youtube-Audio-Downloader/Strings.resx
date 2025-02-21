@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="mainwnd_downloadbtn_text" xml:space="preserve">
+    <value>Descargar Video</value>
+  </data>
+  <data name="mainwnd_searchingplaylist_text" xml:space="preserve">
+    <value>Buscando playlist, espere por favor...</value>
+  </data>
+  <data name="mainwnd_searchingvideo_text" xml:space="preserve">
+    <value>Buscando video, espere por favor...</value>
+  </data>
+  <data name="mainwnd_textbox_placeholder" xml:space="preserve">
+    <value>Inserte una url de un video de youtube</value>
+  </data>
+  <data name="mainwnd_title" xml:space="preserve">
+    <value>Descargar Musicas de Youtube</value>
+  </data>
+  <data name="playlistdownload_ytdlp_args" xml:space="preserve">
+    <value>--ffmpeg-location binaries/ffmpeg.exe -x --audio-format mp3 -o "%(folder)s\%(title)s.%(ext)s" %(url)s</value>
+  </data>
+  <data name="playlisterror_getplaylist_title" xml:space="preserve">
+    <value>Error obteniendo la información de la playlist</value>
+  </data>
+  <data name="playlisterror_invalid" xml:space="preserve">
+    <value>Esta playlist contiene una url que no es valida</value>
+  </data>
+  <data name="playlisterror_novideos" xml:space="preserve">
+    <value>Esta playlist no contiene videos</value>
+  </data>
+  <data name="playlistinfo_ytdlp_args" xml:space="preserve">
+    <value>--flat-playlist --print "%(playlist)s - %(title)s" --no-download %(url)s</value>
+  </data>
+  <data name="playlist_default_name" xml:space="preserve">
+    <value>Playlist</value>
+  </data>
+  <data name="updaterwnd_text" xml:space="preserve">
+    <value>Buscando y descargando actualizaciones...</value>
+  </data>
+  <data name="updaterwnd_title" xml:space="preserve">
+    <value>Updater</value>
+  </data>
+  <data name="update_ytdlp_args" xml:space="preserve">
+    <value>-U</value>
+    <comment>Argumentos para buscar y actualizar yt-dlp.exe</comment>
+  </data>
+  <data name="videodownload_ytdlp_args" xml:space="preserve">
+    <value>--ffmpeg-location binaries/ffmpeg.exe -x --audio-format mp3 -o "%(downloadFolder)s\%(fileName)s" %(url)s</value>
+  </data>
+  <data name="videoerror_cannotsave" xml:space="preserve">
+    <value>No se ha podido guardar el archivo en la ubicación seleccionada "%(folder)s"</value>
+  </data>
+  <data name="videoerror_getvideo_title" xml:space="preserve">
+    <value>Error obteniendo información del video</value>
+  </data>
+  <data name="videoerror_invalid" xml:space="preserve">
+    <value>El video contiene una url invalida</value>
+  </data>
+  <data name="error_download_text" xml:space="preserve">
+    <value>Error al descargar:</value>
+  </data>
+  <data name="error_download_title" xml:space="preserve">
+    <value>Error al descargar</value>
+  </data>
+  <data name="videoinfo_ytdlp_args" xml:space="preserve">
+    <value>--print "%(title)s" --no-download %(url)s</value>
+  </data>
+  <data name="video_default_name" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="preparingdownload_text" xml:space="preserve">
+    <value>Preparando descarga. Espere un momento...</value>
+  </data>
+  <data name="savingdownload_text" xml:space="preserve">
+    <value>Guardando archivo. Espere un momento...</value>
+  </data>
+  <data name="video_succesfuldownload_text" xml:space="preserve">
+    <value>Audio Descargado Satisfactoriamente</value>
+  </data>
+  <data name="video_succesfuldownload_title" xml:space="preserve">
+    <value>Descarga completada</value>
+  </data>
+  <data name="video_wheresave_filter" xml:space="preserve">
+    <value>Archivo MP3 (*.mp3)|*.mp3</value>
+  </data>
+  <data name="video_wheresave_title" xml:space="preserve">
+    <value>Donde guardo la musica?</value>
+  </data>
+  <data name="ytdlp_path" xml:space="preserve">
+    <value>binaries/yt-dlp.exe</value>
+    <comment>Ubicación de programa yt-dlp.exe</comment>
+  </data>
+  <data name="playlistwarning_folderalreadyexist_text" xml:space="preserve">
+    <value>La carpeta %(folder)s ya existe. Se borrara toda la información que contenga. ¿Desea Continuar?</value>
+  </data>
+  <data name="playlistwarning_folderalreadyexist_title" xml:space="preserve">
+    <value>Carpeta de playlist ya existe</value>
+  </data>
+  <data name="playlisterror_cannotdeletefolder_text" xml:space="preserve">
+    <value>Error al borrar la carpeta ¿Faltan permisos?</value>
+  </data>
+  <data name="playlisterror_cannotdeletefolder_title" xml:space="preserve">
+    <value>Error al sobreescribir carpeta</value>
+  </data>
+  <data name="playlist_succesfuldownload_text" xml:space="preserve">
+    <value>Descarga de la playlist completada</value>
+  </data>
+  <data name="playlist_succesfuldownload_title" xml:space="preserve">
+    <value>Playlist descargada</value>
+  </data>
+  <data name="playlisterror_cannotsave" xml:space="preserve">
+    <value>No se ha podido guardar la playlist en la ubicación seleccionada "%(folder)s"</value>
+  </data>
+  <data name="playlist_wheresave_title" xml:space="preserve">
+    <value>Donde guardo la playlist?</value>
+  </data>
+  <data name="mainwnd_downloadprogress_text" xml:space="preserve">
+    <value>Descargando %(file)s - ETA: %(time)s</value>
+  </data>
+  <data name="prog_tempfolder_name" xml:space="preserve">
+    <value>youtube_audio_downloader</value>
+  </data>
+</root>
